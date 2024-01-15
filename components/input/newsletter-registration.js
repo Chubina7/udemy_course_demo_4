@@ -1,13 +1,39 @@
-import classes from './newsletter-registration.module.css';
+import { useRef, useState } from "react";
+import classes from "./newsletter-registration.module.css";
 
 function NewsletterRegistration() {
-  function registrationHandler(event) {
-    event.preventDefault();
+  const [validatorMessage, setValidatorMessage] = useState({})
+  const emailInputRef = useRef();
 
-    // fetch user input (state or refs)
-    // optional: validate input
-    // send valid data to API
-  }
+  const registrationHandler = (e) => {
+    e.preventDefault();
+
+    const enteredEmail = emailInputRef.current.value;
+
+    if (
+      enteredEmail == "" ||
+      !enteredEmail.includes(".") ||
+      !enteredEmail.includes("@")
+    ) {
+      setValidatorMessage({ message: "Try again" })
+    } else {
+      const reqBody = { email: enteredEmail }
+
+      fetch("/api/users", {
+        method: "POST",
+        body: JSON.stringify(reqBody),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setValidatorMessage({ message: `${data.user.email} succsesfuly registered!` })
+        });
+
+      emailInputRef.current.value = ""
+    }
+  };
 
   return (
     <section className={classes.newsletter}>
@@ -15,14 +41,16 @@ function NewsletterRegistration() {
       <form onSubmit={registrationHandler}>
         <div className={classes.control}>
           <input
-            type='email'
-            id='email'
-            placeholder='Your email'
-            aria-label='Your email'
+            type="email"
+            id="email"
+            placeholder="Your email"
+            aria-label="Your email"
+            ref={emailInputRef}
           />
           <button>Register</button>
         </div>
       </form>
+      <p className="center">{validatorMessage.message}</p>
     </section>
   );
 }
