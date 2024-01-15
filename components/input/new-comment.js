@@ -8,8 +8,8 @@ function NewComment(props) {
   const nameInputRef = useRef();
   const commentInputRef = useRef();
 
-  function sendCommentHandler(event) {
-    event.preventDefault();
+  function sendCommentHandler(e) {
+    e.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
     const enteredName = nameInputRef.current.value;
@@ -52,7 +52,7 @@ function NewComment(props) {
         <textarea id='comment' rows='5' ref={commentInputRef}></textarea>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
-      <button>Submit</button>
+      <button onClick={sendCommentHandler}>Submit</button>
     </form>
   );
 }

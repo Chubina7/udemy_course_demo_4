@@ -1,0 +1,26 @@
+[
+  {
+    "eventId": "e1",
+    "name": "test",
+    "email": "test@test.test",
+    "text": "Comment for EVENT #1"
+  },
+  {
+    "eventId": "e1",
+    "name": "test",
+    "email": "test@test.test",
+    "text": "Second comment for EVENT #1"
+  },
+  {
+    "eventId": "e2",
+    "name": "test",
+    "email": "test@test.test",
+    "text": "Comment for EVENT #2"
+  },
+  {
+    "eventId": "e3",
+    "name": "test",
+    "email": "test@test.test",
+    "text": "Comment for EVENT #3"
+  }
+]

@@ -13,8 +13,9 @@ function Comments(props) {
     setShowComments((prevStatus) => !prevStatus);
   }
 
-  function addCommentHandler(commentData) {
-    // send data to API
+  const addCommentHandler = (commentData) => {
+    // Expected { email: enteredEmail, name: enteredName, text: enteredComment } from commentData
+    // fetch("")
   }
 
   return (
