@@ -15,7 +15,7 @@ function Comments(props) {
 
   const addCommentHandler = (commentData) => {
     // Expected { email: enteredEmail, name: enteredName, text: enteredComment } from commentData
-    // fetch("")
+    // 
   }
 
   return (

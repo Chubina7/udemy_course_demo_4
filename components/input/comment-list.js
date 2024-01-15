@@ -1,32 +1,27 @@
 import { useRouter } from 'next/router';
 import classes from './comment-list.module.css';
+import { useState } from 'react';
 
 function CommentList() {
+  const [allComments, setAllComments] = useState([])
+  
   const router = useRouter()
   const eventId = router.query.eventId
 
-  fetch(`api/comments/${eventId}`)
+  fetch(`/api/comments/${eventId}`)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => setAllComments(data.selectedComments))
 
 
   return (
     <ul className={classes.comments}>
-
-
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {allComments.map(comment => {
+        return <li>
+          <p>{comment.name} commented: </p>
+          <h3>{comment.text}</h3>
+          <p style={{ textAlign: 'right' }}>{comment.email}</p>
+        </li>
+      })}
     </ul>
   );
 }
