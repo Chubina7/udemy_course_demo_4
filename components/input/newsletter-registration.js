@@ -3,6 +3,7 @@ import classes from "./newsletter-registration.module.css";
 
 function NewsletterRegistration() {
   const [validatorMessage, setValidatorMessage] = useState({})
+  const [loading, setLoading] = useState(null)
   const emailInputRef = useRef();
 
   const registrationHandler = (e) => {
@@ -28,10 +29,13 @@ function NewsletterRegistration() {
       })
         .then(res => res.json())
         .then(data => {
-          setValidatorMessage({ message: `${data.user.email} succsesfuly registered!` })
+          setLoading(false)
+          setValidatorMessage({ message: `${data.user ? data.user.email : ""} ${data.message}` })
+          data.alertMessage && alert(data.alertMessage)
         });
 
       emailInputRef.current.value = ""
+      setLoading(true)
     }
   };
 
@@ -50,7 +54,7 @@ function NewsletterRegistration() {
           <button>Register</button>
         </div>
       </form>
-      <p className="center">{validatorMessage.message}</p>
+      {loading ? <p className="center">Sending data...</p> : <p className="center">{validatorMessage.message}</p>}
     </section>
   );
 }

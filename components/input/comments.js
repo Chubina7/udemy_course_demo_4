@@ -29,7 +29,18 @@ function Comments(props) {
       },
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        // Error case
+        if (data.alertMessage) {
+          console.error(data.message)
+          alert(data.alertMessage)
+        }
+        // Succses case
+        if (data.comment) {
+          alert(data.message)
+          console.log(data.comment);
+        }
+      })
   }
 
   return (
