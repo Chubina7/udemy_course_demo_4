@@ -12,16 +12,18 @@ function CommentList() {
     .then(res => res.json())
     .then(data => setAllComments(data.selectedComments))
 
-
-  const reversedComments = allComments.reverse()
   return (
     <ul className={classes.comments}>
-      {reversedComments.map(comment => {
-        return <li>
-          <p>{comment.name} commented: </p>
-          <h3>{comment.text}</h3>
-          <p style={{ textAlign: 'right' }}>{comment.email}</p>
-        </li>
+      {allComments.map(comment => {
+        if (comment.eventId == eventId) {
+          return (
+            <li key={comment._id}>
+              <p>{comment.name} commented: </p>
+              <h3>{comment.text}</h3>
+              <p style={{ textAlign: 'right' }}>{comment.email}</p>
+            </li>
+          )
+        }
       })}
     </ul>
   );
