@@ -14,8 +14,22 @@ function Comments(props) {
   }
 
   const addCommentHandler = (commentData) => {
-    // Expected { email: enteredEmail, name: enteredName, text: enteredComment } from commentData
-    // 
+    const newComment = {
+      eventId: eventId,
+      email: commentData.email,
+      name: commentData.name,
+      text: commentData.text
+    }
+
+    fetch(`/api/comments/${eventId}`, {
+      method: "POST",
+      body: JSON.stringify(newComment),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
   }
 
   return (
