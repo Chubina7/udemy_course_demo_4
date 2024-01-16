@@ -1,1 +1,26 @@
-[{"eventId":"e1","name":"test","email":"test@test.test","text":"Comment for EVENT #1"},{"eventId":"e1","name":"test","email":"test@test.test","text":"Second comment for EVENT #1"},{"eventId":"e2","name":"test","email":"test@test.test","text":"Comment for EVENT #2"},{"eventId":"e3","name":"test","email":"test@test.test","text":"Comment for EVENT #3"},{"eventId":"e2","name":"luka","email":"lukaminer321@gmail.com"},{"eventId":"e2","name":"luka","email":"lukaminer321@gmail.com","text":"ADSHGFNM"},{"eventId":"e2","name":"luka","email":"lukaminer321@gmail.com","text":"kargi komentari"}]
+[
+  {
+    "eventId": "e2",
+    "name": "Maxim",
+    "email": "test@registration.com",
+    "text": "This is wonderful comment ! ! !"
+  },
+  {
+    "eventId": "e3",
+    "name": "Some1",
+    "email": "another@registration.com",
+    "text": "I am seeing this web-page and i am amazed ! ! !"
+  },
+  {
+    "eventId": "e2",
+    "name": "Nuziana Novna",
+    "email": "example@gmail.com",
+    "text": "Everything works :0 o m g"
+  },
+  {
+    "eventId": "e1",
+    "name": "AGoodPerson",
+    "email": "somge@onge.on",
+    "text": "I appreciate the person who made this web-page"
+  }
+]

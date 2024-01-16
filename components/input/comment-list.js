@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function CommentList() {
   const [allComments, setAllComments] = useState([])
-  
+
   const router = useRouter()
   const eventId = router.query.eventId
 
@@ -13,9 +13,10 @@ function CommentList() {
     .then(data => setAllComments(data.selectedComments))
 
 
+  const reversedComments = allComments.reverse()
   return (
     <ul className={classes.comments}>
-      {allComments.map(comment => {
+      {reversedComments.map(comment => {
         return <li>
           <p>{comment.name} commented: </p>
           <h3>{comment.text}</h3>
