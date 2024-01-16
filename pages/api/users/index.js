@@ -1,25 +1,16 @@
-import fs from "fs"
-import path from "path"
+import { MongoClient } from "mongodb"
 
-const handler = (req, res) => {
+async function handler(req, res) {
     if (req.method === "POST") {
         const email = req.body.email
+        const newUserEmail = { email: email }
 
-        const newUserEmail = { email: email, id: new Date().toISOString() }
-
-        const filePath = path.join(process.cwd(), "data", "users.json")
-        const fileData = fs.readFileSync(filePath)
-        const data = JSON.parse(fileData)
-        data.push(newUserEmail)
-        fs.writeFileSync(filePath, JSON.stringify(data))
-
+        const client = await MongoClient.connect("mongodb+srv://chub7na:styJaqpfe6DNKT2q@cluster0.lauhirt.mongodb.net/?retryWrites=true&w=majority")
+        const db = client.db()
+        await db.collection("users").insertOne(newUserEmail)
         res.status(201).json({ message: "POST requested succsesfully!", user: newUserEmail })
-    } else if (req.method === "GET") {
-        const filePath = path.join(process.cwd(), "data", "users.json")
-        const fileData = fs.readFileSync(filePath)
-        const data = JSON.parse(fileData)
 
-        res.status(200).json({ users: data })
+        client.close()
     } else {
         res.status(200).json({ message: "ELSE STATEMENT; NOT DEFINED THAT REQUEST YET" })
     }

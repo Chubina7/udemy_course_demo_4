@@ -1,7 +1,6 @@
-import fs from "fs"
-import path from "path"
+import { MongoClient } from "mongodb"
 
-const handler = (req, res) => {
+async function handler(req, res) {
     if (req.method === "GET") {
         const eventId = req.query.eventId
 
@@ -30,15 +29,14 @@ const handler = (req, res) => {
             text: text
         }
 
-        const filePath = path.join(process.cwd(), "data", "comments.json")
-        const fileData = fs.readFileSync(filePath)
-        const commentData = JSON.parse(fileData)
-        commentData.push(newComment)
-        fs.writeFileSync(filePath, JSON.stringify(commentData))
-
+        const client = await MongoClient.connect("mongodb+srv://chub7na:styJaqpfe6DNKT2q@cluster0.lauhirt.mongodb.net/?retryWrites=true&w=majority")
+        const db = client.db()
+        await db.collection("comments").insertOne(newComment)
         res.status(201).json({ message: "Message add succsesfully!", comment: newComment })
+
+        client.close()
     } else {
-        res.status(200).json({ message: "DYNAMIC COMMENTS API WORKS!" })
+        res.status(200).json({ message: "IT IS THE REQUEST WHICH IS NOT DEFINED YET" })
     }
 }
 
