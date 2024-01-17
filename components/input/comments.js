@@ -5,9 +5,11 @@ import NewComment from './new-comment';
 import classes from './comments.module.css';
 
 function Comments(props) {
+  const [pushComments, setPushComments] = useState(0)
+  const [showComments, setShowComments] = useState(false);
+
   const { eventId } = props;
 
-  const [showComments, setShowComments] = useState(false);
 
   function toggleCommentsHandler() {
     setShowComments((prevStatus) => !prevStatus);
@@ -33,11 +35,11 @@ function Comments(props) {
         // Error case
         if (data.alertMessage) {
           console.error(data.message)
-          alert(data.alertMessage)
+          // alert(data.alertMessage)
         }
         // Succses case
         if (data.comment) {
-          alert(data.message)
+          // alert(data.message)
           console.log(data.comment);
         }
       })
@@ -48,8 +50,8 @@ function Comments(props) {
       <button onClick={toggleCommentsHandler}>
         {showComments ? 'Hide' : 'Show'} Comments
       </button>
-      {showComments && <NewComment onAddComment={addCommentHandler} />}
-      {showComments && <CommentList />}
+      {showComments && <NewComment onAddComment={addCommentHandler} setPushComments={setPushComments} />}
+      {showComments && <CommentList pushComments={pushComments} />}
     </section>
   );
 }

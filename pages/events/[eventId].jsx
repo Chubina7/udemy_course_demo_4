@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Head from "next/head";
 
 import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
@@ -20,7 +19,7 @@ function EventDetailPage(props) {
   }
 
   return (
-    <Fragment>
+    <>
       <Head>
         <title>{event.title}</title>
         <meta name="description" content={event.description} />
@@ -36,7 +35,7 @@ function EventDetailPage(props) {
         <p>{event.description}</p>
       </EventContent>
       <Comments eventId={event.id} />
-    </Fragment>
+    </>
   );
 }
 
