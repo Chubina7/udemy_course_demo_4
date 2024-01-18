@@ -2,9 +2,8 @@ import { useRouter } from 'next/router';
 import classes from './comment-list.module.css';
 import { useEffect, useState } from 'react';
 
-function CommentList(props) {
+function CommentList({ shouldReRender }) {
   const [allComments, setAllComments] = useState([])
-  const [outputMessage, setOutputMessage] = useState("")
   const [loading, setLoading] = useState(true)
 
   const router = useRouter()
@@ -15,25 +14,20 @@ function CommentList(props) {
       const response = await fetch(`/api/comments/${eventId}`)
       const data = await response.json()
 
-      // Succses case
-      if (data.selectedComments) {
-        setLoading(false)
-        setAllComments(data.selectedComments)
-        console.log(data.message)
-      }
-      // Error case
-      if (data.consoleMessage) {
-        setOutputMessage(data.message)
-        console.error(data.consoleMessage);
-      }
+      setAllComments(data.selectedComments)
+      setLoading(false)
+
+      console.log("Fetching....")
+      console.log("კონტექსტის მესიჯი", shouldReRender);
     }
+
     fetchData()
-  }, [allComments])
+  }, [shouldReRender])
 
   return (
     <ul className={classes.comments}>
-      <p>{loading && "Loading comments..."}</p>
-      {allComments.length < 1 && !loading ? <p>There is no comments, start adding ones</p> : allComments.map(comment => {
+      {loading && <p>Loading...</p>}
+      {allComments && allComments.map(comment => {
         if (comment.eventId == eventId) {
           return (
             <li key={comment._id}>
@@ -44,7 +38,6 @@ function CommentList(props) {
           )
         }
       })}
-      <p>{outputMessage}</p>
     </ul>
   );
 }
