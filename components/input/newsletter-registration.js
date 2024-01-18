@@ -1,15 +1,21 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import classes from "./newsletter-registration.module.css";
+import NotificationContext from "../../store/notification-context";
 
 function NewsletterRegistration() {
-  const [validatorMessage, setValidatorMessage] = useState({})
-  const [loading, setLoading] = useState(null)
+  const notificationCtx = useContext(NotificationContext)
   const emailInputRef = useRef();
 
   const registrationHandler = (e) => {
     e.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
+
+    notificationCtx.showNotification({
+      title: "Signing up...",
+      message: "Registering for newsletter...",
+      status: "pending"
+    })
 
     if (
       enteredEmail == "" ||
@@ -27,15 +33,31 @@ function NewsletterRegistration() {
           "Content-Type": "application/json",
         },
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          }
+
+          return res.json().then(data => {
+            throw new Error(data.message || "Something went wrong!")
+          })
+        })
         .then(data => {
-          setLoading(false)
-          setValidatorMessage({ message: `${data.user ? data.user.email : ""} ${data.message}` })
-          data.alertMessage && alert(data.alertMessage)
-        });
+          notificationCtx.showNotification({
+            title: "Succsess!",
+            message: "Succsessfully registered for newsletter!",
+            status: "success"
+          })
+        })
+        .catch(error => {
+          notificationCtx.showNotification({
+            title: "Error!",
+            message: error.message || "Something went wrong!",
+            status: "error"
+          })
+        })
 
       emailInputRef.current.value = ""
-      setLoading(true)
     }
   };
 
@@ -54,7 +76,6 @@ function NewsletterRegistration() {
           <button>Register</button>
         </div>
       </form>
-      {loading ? <p className="center">Sending data...</p> : <p className="center">{validatorMessage.message}</p>}
     </section>
   );
 }

@@ -5,7 +5,6 @@ import NewComment from './new-comment';
 import classes from './comments.module.css';
 
 function Comments(props) {
-  const [pushComments, setPushComments] = useState(0)
   const [showComments, setShowComments] = useState(false);
 
   const { eventId } = props;
@@ -50,8 +49,8 @@ function Comments(props) {
       <button onClick={toggleCommentsHandler}>
         {showComments ? 'Hide' : 'Show'} Comments
       </button>
-      {showComments && <NewComment onAddComment={addCommentHandler} setPushComments={setPushComments} />}
-      {showComments && <CommentList pushComments={pushComments} />}
+      {showComments && <NewComment onAddComment={addCommentHandler} />}
+      {showComments && <CommentList />}
     </section>
   );
 }

@@ -28,8 +28,7 @@ function CommentList(props) {
       }
     }
     fetchData()
-  }, [props.pushComments])
-
+  }, [allComments])
 
   return (
     <ul className={classes.comments}>

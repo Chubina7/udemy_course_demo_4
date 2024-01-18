@@ -37,8 +37,6 @@ function NewComment(props) {
     emailInputRef.current.value = ""
     nameInputRef.current.value = ""
     commentInputRef.current.value = ""
-
-    props.setPushComments((prevState) => prevState + 2)
   }
 
   return (
